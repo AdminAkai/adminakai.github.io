@@ -1,0 +1,13 @@
+            <div class="aside">
+            </div>
+
+            
+body .aside {
+    position: absolute;
+    display: flex;
+    height: 100vh;
+    width: 17vw;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: #575454;
+}
