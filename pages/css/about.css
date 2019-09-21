@@ -94,6 +94,7 @@ body .main-content {
     align-items: flex-start;
     flex-direction: column;
     width: 60vw;
+    margin-left: 10vw;
 }
 
 .main-content h1 {
@@ -167,14 +168,16 @@ body .main-content {
 
 .tool-icons {
     display: flex;
-    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row wrap;
 }
 
 .tool-icons ul {
     list-style: none;
+    margin-top: 12vh;
 }
 
-img.resize {
-    height: 480;
-    width: auto;
+.tool-icons li {
+    padding: 10px;
 }
