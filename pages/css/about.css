@@ -12,7 +12,7 @@
         height: 100%;
         padding-top: 100px;
         overflow: hidden;
-        background-image:url('images/whitebackground.jpg');
+        background-image:url('whitebackground.jpg');
         background-repeat:no-repeat;
         background-size:contain;
         background-position:center;
@@ -86,9 +86,7 @@
 body {
     height: 100%;
     padding-top: 100px;
-    overflow: hidden;
-    background: url("images/whitebackground.jpg") no-repeat center center fixed;
-    background-size: cover;
+    overflow: hidden; 
 }
 
 body .main-content {

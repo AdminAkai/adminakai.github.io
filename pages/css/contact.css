@@ -12,7 +12,7 @@
         height: 100%;
         padding-top: 100px;
         overflow: hidden;
-        background-image:url('images/whitebackground.jpg');
+        background-image:url('whitebackground.jpg');
         background-repeat:no-repeat;
         background-size:contain;
         background-position:center;
@@ -87,8 +87,6 @@ body {
     height: 100%;
     padding-top: 100px;
     overflow: hidden;
-    background: url("images/whitebackground.jpg") no-repeat center center fixed;
-    background-size: cover;
 }
 
 body .main-content {
@@ -108,17 +106,9 @@ body .main-content {
     border-bottom: 3px solid black;
 }
 
-.main-content .link {
-    padding: 20px;
-    border: 3px solid black;
-    margin-top: 20px;
-    display: flex;  
-    justify-content: center;
-    text-align: center;
-    font-size: 20px;
-    margin: 10px;
-    width: 50vw;
-    line-height: 1.5rem;
+a img {
+    width: auto;
+    height: 150px;
 }
 
 
