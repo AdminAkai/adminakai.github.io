@@ -11,9 +11,8 @@
     body {
         height: 100%;
         padding-top: 100px;
-        overflow: hidden;
         background-image:url('whitebackground.jpg');
-        background-repeat:no-repeat;
+        background-repeat:no-repeat;    
         background-size:contain;
         background-position:center;
     }
@@ -21,7 +20,8 @@
 
 .wrapper {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
+    display: flex;
 }
 
 .nav-header {
@@ -86,21 +86,21 @@
 body {
     height: 100%;
     padding-top: 100px;
-    overflow: hidden; 
 }
 
 body .main-content {
     display: flex;
-    justify-content: center;  
-    align-items: center;
+    justify-content: flex-start;  
+    align-items: flex-start;
     flex-direction: column;
-    width: 100vw;
+    width: 60vw;
 }
 
 .main-content h1 {
+    margin-left: 20vw;
     margin-top: 50px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     font-size: 50px;
     margin-bottom: 30px;
     border-bottom: 3px solid black;
@@ -114,8 +114,8 @@ body .main-content {
 .main-content p {
     margin-top: 20px;
     display: flex;
-    justify-content: center;
-    text-align: center;
+    justify-content: flex-start;
+    text-align: flex-start;
     font-size: 20px;
     margin: 10px;
     width: 50vw;
@@ -163,4 +163,18 @@ body .main-content {
     opacity: 0;
     animation-name: fadeInUp;
     -webkit-animation-name: fadeInUp;
+}
+
+.tool-icons {
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.tool-icons ul {
+    list-style: none;
+}
+
+img.resize {
+    height: 480;
+    width: auto;
 }
