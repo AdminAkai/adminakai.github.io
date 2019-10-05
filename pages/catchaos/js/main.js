@@ -136,7 +136,7 @@ function spawnPoints () {
 function spawnEnemy() {
   for (let i = 0; i < game.spawnrate; i++) {
     game.totalEnemies += 1
-    if (game.enemyCount == game.spawnrate + 1 && game.spawnrate < 5) {
+    if (game.enemyCount == game.spawnrate + 2 && game.spawnrate < 8) {
       game.spawnrate += 1
       game.enemyCount = 0
     } 
