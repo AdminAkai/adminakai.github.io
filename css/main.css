@@ -223,7 +223,7 @@ body .main-content {
 
 .game-space {
     height: calc(100% - 100px);
-    background: linear-gradient(to left, #f163ce, #ec6565);   
+    background: linear-gradient(to left, #3f51b9, #abacca);   
 }
 
 .box-area {
