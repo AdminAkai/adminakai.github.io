@@ -253,10 +253,9 @@ body .main-content {
 
 .main-content img {
     border: 4px solid white;
-    transform: rotate(90deg);
     width: 250px;
-    height: 200px;
-    border-radius: 60%;
+    height: 250px;
+    border-radius: 50%;
 }
 
 .main-content p {
