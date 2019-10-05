@@ -87,25 +87,25 @@ body {
     to {
       -moz-filter: hue-rotate(-360deg);
     }
-  }
+}
 
-  @-ms-keyframes hue {
+@-ms-keyframes hue {
     from {
       -ms-filter: hue-rotate(0deg);
     }
     to {
       -ms-filter: hue-rotate(-360deg);
     }
-  }
+}
 
-  @-o-keyframes hue {
+@-o-keyframes hue {
     from {
       -o-filter: hue-rotate(0deg);
     }
     to {
       -o-filter: hue-rotate(-360deg);
     }
-  }
+}
 
 #lives {
     width: 100%;
