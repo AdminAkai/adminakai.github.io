@@ -36,7 +36,7 @@ function gameOver () {
   let gameBackground = document.getElementsByClassName('game-space')[0]
   if (game.lives >= 0) {
     let getLives = document.querySelector("#lives")
-    if (game.totalEnemies >= 10) {
+    if (game.totalEnemies > 10) {
       game.lives -= 1
       let numberOfLives = getLives.children
       if (numberOfLives.length > 0) {
@@ -182,6 +182,18 @@ function clickEnemy () {
   setTimeout(() => {
     this.parentNode.removeChild(this) 
   }, 1000);
+}
+
+var promise = document.querySelector('#my_audio').play()
+
+if (promise !== undefined) {
+    promise.then(_ => {
+      promise.play()
+        // Autoplay started!
+    }).catch(error => {
+        // Autoplay was prevented.
+        // Show a "Play" button so that user can start playback.
+    });
 }
 
 gameMain()
