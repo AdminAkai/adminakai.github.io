@@ -7,6 +7,7 @@ var game = {
   enemyCount: 0,
   totalEnemies: 0,
   lives: 3,
+  waveCount: 0,
 }
 
 function gameStart () {
@@ -21,6 +22,14 @@ function gameMain () {
 } 
 
 function clickGameStart () {
+  var audio = document.querySelector('#my_audio')
+  console.log(audio)
+  audio.volume = 0.5
+  if (audio.paused) {
+    audio.play()
+  } else {
+    audio.currentTime = 0
+  }
   let gameBackground = document.getElementsByClassName('game-space')[0]
   gameBackground.style.background = 'linear-gradient(to left, #f163ce, #ec6565)'
   spawnPoints()
@@ -128,18 +137,35 @@ function spawnPoints () {
   pointBox.id = 'points'
   pointBox.className = 'score'
   pointBox.style.fontSize = '50px'
-  parentNode.insertBefore(pointBox, parentNode.childNodes[0])
+  parentNode.appendChild(pointBox)
   let innerPointBox = document.querySelector("#points")
   innerPointBox.innerHTML = `${game.points} CAT DESTRUCTIONS`
 }
 
 function spawnEnemy() {
+  game.waveCount += 1
+  console.log(`Wave ${game.waveCount}`)
+  if (game.waveCount === 4) {
+    game.spawnrate += 1
+    console.log(`Wave ${game.spawnrate}`)
+  } else if (game.waveCount === 8) {
+    game.spawnrate += 2
+    console.log(`Wave ${game.spawnrate}`)
+  } else if (game.waveCount === 12) {
+    game.spawnrate += 2
+    console.log(`Wave ${game.spawnrate}`)
+  } else if (game.waveCount === 16) {
+    game.spawnrate += 1
+    console.log(`Wave ${game.spawnrate}`)
+  }
   for (let i = 0; i < game.spawnrate; i++) {
     game.totalEnemies += 1
-    if (game.enemyCount == game.spawnrate + 2 && game.spawnrate < 8) {
-      game.spawnrate += 1
-      game.enemyCount = 0
-    } 
+    console.log(`There are ${game.totalEnemies} enemies`)
+    // game.totalEnemies += 1
+    // if (game.enemyCount == game.spawnrate + 2 && game.spawnrate < 8) {
+    //   game.spawnrate += 1
+    //   game.enemyCount = 0
+    // } 
     let enemyElement = document.createElement('img')
     enemyElement.src = 'assets/pixelcat.png'
     var xy = getRandomPosition(enemyElement)
@@ -173,6 +199,9 @@ function spawnEnemy() {
 }
 
 function clickEnemy () {
+  let audioEnemy = document.getElementById('cat_death')
+  audioEnemy.load()
+  audioEnemy.play()
   game.points += 1
   game.totalEnemies -= 1
   let pointsUpdate = document.querySelector("#points")
@@ -180,20 +209,8 @@ function clickEnemy () {
   this.removeEventListener('click', clickEnemy)
   this.src = 'assets/spaceexplosion.gif'
   setTimeout(() => {
-    this.parentNode.removeChild(this) 
+    this.remove()
   }, 1000);
-}
-
-var promise = document.querySelector('#my_audio').play()
-
-if (promise !== undefined) {
-    promise.then(_ => {
-      promise.play()
-        // Autoplay started!
-    }).catch(error => {
-        // Autoplay was prevented.
-        // Show a "Play" button so that user can start playback.
-    });
 }
 
 gameMain()
