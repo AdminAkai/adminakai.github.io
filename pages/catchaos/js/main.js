@@ -127,12 +127,9 @@ function clickInstructions () {
 }
 
 function clickGameStart () {
-  if (game.audio.paused) {
-    game.audio.volume = 0.1
-    game.audio.play()
-  } else {
-     game.audio.currentTime = 0
-  }
+  game.audio.volume = 0.1
+  game.audio.currentTime = 0
+  game.audio.play()
   let gameBackground = document.getElementsByClassName('game-space')[0]
   gameBackground.style.background = 'linear-gradient(to left, #f163ce, #ec6565)'
   spawnPoints()
@@ -164,6 +161,11 @@ function gameOver () {
         }
       }
         if (game.lives === 0) {
+          game.audio.pause()
+          let gameOverAudio = document.getElementById('game_over')
+          gameOverAudio.load()
+          gameOverAudio.volume = 0.4
+          gameOverAudio.play()
           gameBackground.style.background = 'black'
           game.spawnrate = 1
           game.enemyCount = 0
@@ -265,7 +267,7 @@ function spawnBombs () {
   let innerBombBox = document.querySelector("#bombs")
   for (let i = 0; i < 3; i++) {
       let bombElement = document.createElement('img')
-      bombElement.src = 'assets/bomb.png'
+      bombElement.src = 'assets/death.gif'
       bombElement.className = 'bomb' 
       innerBombBox.appendChild(bombElement)
   }
@@ -279,7 +281,7 @@ function spawnHeart () {
     let innerHeartBox = document.querySelector("#lives")
     for (let i = 0; i < 3; i++) {
         let heartElement = document.createElement('img')
-        heartElement.src = 'assets/heart.png'
+        heartElement.src = 'assets/heart.gif'
         heartElement.className = 'heart' 
         innerHeartBox.appendChild(heartElement)
     }
@@ -361,7 +363,7 @@ function clickEnemy () {
 function enemyDeathSound () {
   let audioEnemy = document.getElementById('cat_death')
   audioEnemy.load()
-  audioEnemy.volume = 0.5
+  audioEnemy.volume = 0.2
   audioEnemy.play()
 }
 
