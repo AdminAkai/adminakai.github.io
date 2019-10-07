@@ -8,9 +8,8 @@ var game = {
   totalEnemies: 0,
   lives: 3,
   waveCount: 0,
+  audio: document.querySelector('#my_audio'),
 }
-
-var audio = document.querySelector('#my_audio')
 
 function gameStart () {
   if (game.gameRun === true) {
@@ -20,15 +19,95 @@ function gameStart () {
 
 function gameMain () {
   let startGame = document.getElementsByClassName("game-start-button")[0]
+  let instructionsButton = document.getElementsByClassName("instructions-button")[0]
+  instructionsButton.addEventListener('click', clickInstructions)
+  instructionsButton.addEventListener('mouseover', function(){
+    let instructionsColor = document.getElementsByClassName('instructions-button')[0]
+    instructionsColor.style.backgroundImage = '-webkit-linear-gradient(92deg, #0400da, #0051ff)'
+  })
+  instructionsButton.addEventListener('mouseout', function(){
+    let instructionsColor = document.getElementsByClassName('instructions-button')[0]
+    instructionsColor.style.backgroundImage = '-webkit-linear-gradient(92deg, #f35626, #feab3a)'
+  })
   startGame.addEventListener('click', clickGameStart)
+  startGame.addEventListener('mouseover', function() {
+    let gameStartColor = document.getElementsByClassName('game-start-button')[0]
+    gameStartColor.style.backgroundImage = '-webkit-linear-gradient(92deg, #0400da, #0051ff)'
+  })
+  startGame.addEventListener('mouseout', function(){
+    let gameStartColor = document.getElementsByClassName('game-start-button')[0]
+    gameStartColor.style.backgroundImage = '-webkit-linear-gradient(92deg, #f35626, #feab3a)'
+  })
 } 
 
+function returnToTitle () {
+  let titleMain = document.getElementsByClassName('game-space')[0]
+  titleMain.style.background = 'linear-gradient(to left, #f163ce, #ec6565)'
+  let titleChild = titleMain.lastElementChild
+  while (titleChild) {
+    titleMain.removeChild(titleChild)
+    titleChild = titleMain.lastElementChild
+  }
+  let parentNode = document.querySelector(".game-space")
+  let titleBox = document.createElement('div')
+  titleBox.id = 'game-start'
+  parentNode.insertBefore(titleBox, parentNode.childNodes[0])
+  let innerTitleBox = document.querySelector("#game-start")
+  let titleText = document.createElement('h1')
+  titleText.className = 'title'
+  titleText.innerHTML = 'CAT CHAOS'
+  let instructionsText = document.createElement('h3')
+  instructionsText.className = 'instructions-button'
+  instructionsText.innerHTML = 'INSTRUCTIONS'
+  let gameStartText = document.createElement('h3')
+  gameStartText.className = 'game-start-button'
+  gameStartText.innerHTML = 'GAME START'
+  innerTitleBox.appendChild(titleText)
+  innerTitleBox.appendChild(instructionsText)
+  innerTitleBox.appendChild(gameStartText)
+  gameMain()
+}
+
+function clickInstructions () {
+  let gameBackground = document.getElementsByClassName('game-space')[0]
+  gameBackground.style.background = 'linear-gradient(to left, #f163ce, #ec6565)'
+  let gameDiv = document.getElementById('game-start')
+  let gameChild = gameDiv.lastElementChild
+  while (gameChild) {
+    gameDiv.removeChild(gameChild)
+    gameChild = gameDiv.lastElementChild
+  }
+  let parentNode = document.querySelector(".game-space")
+  let instructionBox = document.createElement('div')
+  instructionBox.id = 'instructionBox'
+  parentNode.insertBefore(instructionBox, parentNode.childNodes[0])
+  let innerInstructionBox = document.querySelector("#instructionBox")
+  let instructions = "CLICK THE CATS TO MAKE THEM EXPLODE!<br>IF THERE ARE MORE 10 CATS ON THE SCREEN BY THE NEXT WAVE,<br>YOU TAKE DAMAGE!"
+  innerInstructionBox.innerHTML = `${instructions}`
+  let returnButtonBox = document.createElement('div')
+  returnButtonBox.className = 'return-box'
+  let returnButton = document.createElement('h3')
+  returnButton.className = "return-button"
+  returnButton.innerHTML = "RETURN"
+  returnButton.addEventListener('click', returnToTitle)
+  returnButton.addEventListener('mouseover', function() {
+    let returnButtonColor = document.getElementsByClassName('return-button')[0]
+    returnButtonColor.style.backgroundImage = '-webkit-linear-gradient(92deg, #0400da, #0051ff)'
+  })
+  returnButton.addEventListener('mouseout', function(){
+    let returnButtonColor = document.getElementsByClassName('return-button')[0]
+    returnButtonColor.style.backgroundImage = '-webkit-linear-gradient(92deg, #f35626, #feab3a)'
+  })
+  returnButtonBox.appendChild(returnButton)
+  parentNode.insertBefore(returnButtonBox, parentNode.hasChildNodes[0])
+}
+
 function clickGameStart () {
-  if (audio.paused) {
-    audio.volume = 0.1
-    audio.play()
+  if (game.audio.paused) {
+    game.audio.volume = 0.1
+    game.audio.play()
   } else {
-     audio.currentTime = 0
+     game.audio.currentTime = 0
   }
   let gameBackground = document.getElementsByClassName('game-space')[0]
   gameBackground.style.background = 'linear-gradient(to left, #f163ce, #ec6565)'
