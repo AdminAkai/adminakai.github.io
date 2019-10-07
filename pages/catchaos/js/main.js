@@ -110,10 +110,8 @@ function getRandomPosition(element) {
   let parentElement = document.getElementsByClassName("game-space")[0]
   var x = parentElement.offsetHeight-element.clientHeight;
   var y = parentElement.offsetWidth-element.clientWidth;
-  do {
-    var randomX = Math.floor(Math.random()*x)
-    var randomY = Math.floor(Math.random()*y)
-  } while (randomX <= 300 && randomX >= 900 && randomY <= 200 && randomY >= 500)
+  var randomX = Math.floor(Math.random()*(x - 100))
+  var randomY = Math.floor(Math.random()*(y - 100))
   return [randomX,randomY];
 }
 
@@ -170,8 +168,8 @@ function spawnEnemy() {
     let positionY = xy[1]
     enemyElement.style.top = `${positionX}px`
     enemyElement.style.left = `${positionY}px`
-    enemyElement.style.bottom = `${positionX}px`
-    enemyElement.style.right = `${positionY}px`
+    enemyElement.style.right = `${positionX}px`
+    enemyElement.style.bottom = `${positionY}px`
     enemyElement.className = 'pixelcat' 
     enemyElement.addEventListener('click', clickEnemy)
     document.querySelector(".game-space").appendChild(enemyElement)
