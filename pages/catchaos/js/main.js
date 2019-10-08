@@ -275,7 +275,7 @@ var bombUse = function(event) {
           console.log(`there are only ${numberOfBombs.length} bomb images left`)
         }
         let enemyList = document.querySelectorAll('.pixelcat')
-        enemyDeathSound()
+        summonDeathSound()
         game.points += enemyList.length
         for (let i = 0; i < enemyList.length; i++) {
           enemyList[i].removeEventListener('click', clickEnemy)
@@ -396,6 +396,13 @@ function enemyDeathSound () {
   audioEnemy.load()
   audioEnemy.volume = 0.2
   audioEnemy.play()
+}
+
+function summonDeathSound () {
+  let audioDeath = document.getElementById('summon_death')
+  audioDeath.load()
+  audioDeath.volume = 1
+  audioDeath.play()
 }
 
 gameMain()
