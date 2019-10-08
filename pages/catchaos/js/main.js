@@ -127,7 +127,7 @@ function clickInstructions () {
   instructionBox.id = 'instructionBox'
   parentNode.insertBefore(instructionBox, parentNode.childNodes[0])
   let innerInstructionBox = document.querySelector("#instructionBox")
-  let instructions = "ALL NAVIGATION BUTTONS ARE DISABLED WHEN THE GAME STARTS<br>CLICK THE CATS TO MAKE THEM EXPLODE!<br>IF THERE ARE MORE THAN 10 CATS ON THE SCREEN BY THE NEXT WAVE,<br>YOU TAKE DAMAGE!<br>HIT SPACEBAR TO SUMMON DEATH AND CLEAR THE WHOLE SCREEN FROM CATS!<br>THIS ALSO SLOWS THEIR INVASION FOR A SHORT WHILE!"
+  let instructions = "ALL NAVIGATION BUTTONS ARE DISABLED WHEN THE GAME STARTS<br>CLICK THE CATS TO MAKE THEM EXPLODE!<br>IF THERE ARE MORE THAN 10 CATS ON THE SCREEN BY THE NEXT WAVE,<br>YOU TAKE DAMAGE!<br>HIT SPACEBAR TO SUMMON DEATH AND CLEAR THE WHOLE SCREEN FROM CATS!<br>REPORTS SAY THIS DOES NOT WORK AGAINT 'IT'<br>"
   innerInstructionBox.innerHTML = `${instructions}`
   let returnButtonBox = document.createElement('div')
   returnButtonBox.className = 'return-box'
@@ -418,12 +418,6 @@ function newEnemy(src, lives) {
     game.totalEnemies += 3
     let enemyElement = document.createElement('img')
     enemyElement.src = `assets/${src}`
-    // var xy = getRandomPosition(enemyElement)
-    // let positionX = xy[0]
-    // let positionY = xy[1]
-    // enemyElement.style.top = `${positionX}px`
-    // enemyElement.style.left = `${positionY}px`
-    // enemyElement.style.right = `${positionX}px`
     enemyElement.style.bottom = `300px`
     enemyElement.style.width = '624px'
     enemyElement.style.height = '484px'
