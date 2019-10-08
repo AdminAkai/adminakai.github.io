@@ -10,6 +10,21 @@ var game = {
   roundCount: 0,
   audio: document.querySelector('#my_audio'),
   bombs: 3,
+  enemyTypes: [
+    { 
+      name: 'pixelcat.png',
+      life: 1,
+    },
+    {
+      name: 'parakat.gif',
+      life: 1,
+    }, 
+    { 
+      name: 'hiddendoor.gif',
+      life: 2, 
+    },
+    ],
+  maxSpawn: 0,
 }
 
 function gameStart () {
@@ -72,6 +87,8 @@ function returnToTitle () {
   game.enemyCount = 0
   game.roundCount = 0
   game.timer = 3000
+  game.bombs = 3
+  console.log(`there are ${game.bombs} bombs left from returnToTitle`)
   let titleMain = document.getElementsByClassName('game-space')[0]
   titleMain.style.background = 'linear-gradient(to left, #f163ce, #ec6565)'
   let currentSpace = document.getElementById('game-start')
@@ -106,7 +123,7 @@ function clickInstructions () {
   instructionBox.id = 'instructionBox'
   parentNode.insertBefore(instructionBox, parentNode.childNodes[0])
   let innerInstructionBox = document.querySelector("#instructionBox")
-  let instructions = "ALL NAVIGATION BUTTONS ARE DISABLED WHEN THE GAME STARTS!<br>CLICK THE CATS TO MAKE THEM EXPLODE!<br>IF THERE ARE MORE THAN 10 CATS ON THE SCREEN BY THE NEXT WAVE, YOU TAKE DAMAGE!<br>HIT SPACEBAR TO SUMMON DEATH AND CLEAR THE WHOLE SCREEN FROM CATS!<br>THIS ALSO SLOWS THEIR INVASION FOR A SHORT WHILE!"
+  let instructions = "ALL NAVIGATION BUTTONS ARE DISABLED WHEN THE GAME STARTS<br>CLICK THE CATS TO MAKE THEM EXPLODE!<br>IF THERE ARE MORE THAN 10 CATS ON THE SCREEN BY THE NEXT WAVE,<br>YOU TAKE DAMAGE!<br>HIT SPACEBAR TO SUMMON DEATH AND CLEAR THE WHOLE SCREEN FROM CATS!<br>THIS ALSO SLOWS THEIR INVASION FOR A SHORT WHILE!"
   innerInstructionBox.innerHTML = `${instructions}`
   let returnButtonBox = document.createElement('div')
   returnButtonBox.className = 'return-box'
@@ -135,7 +152,8 @@ function clickGameStart () {
   spawnPoints()
   spawnBombs()
   spawnHeart()
-  bombUse()
+  var keyDownlistener = document
+  keyDownlistener.addEventListener("keydown", bombUse)
   let logoClick = document.querySelector('.logo a')
   logoClick.href = '#'
   game.gameRun = true
@@ -161,6 +179,7 @@ function gameOver () {
         }
       }
         if (game.lives === 0) {
+          tearDownPowers()
           game.audio.pause()
           let gameOverAudio = document.getElementById('game_over')
           gameOverAudio.load()
@@ -170,7 +189,9 @@ function gameOver () {
           game.spawnrate = 1
           game.enemyCount = 0
           game.timer = 3000
-          game.lives = 3
+          game.lives = 3  
+          game.bombs = 3
+          console.log(`there are ${game.bombs} bombs left in game over`)
           clearInterval(enemySpawner)
           game.gameRun = false
           let enemyList = document.querySelectorAll('img')
@@ -199,6 +220,7 @@ function gameOver () {
           let restartGame = document.createElement('h3')
           restartGame.className = 'return-button'
           restartGame.innerHTML = 'RETURN TO MAIN MENU'
+          tearDownPowers()
           restartGame.addEventListener('click', returnToTitle)
           restartGame.addEventListener('mouseover', function() {
             let restartColor = document.getElementsByClassName('return-button')[0]
@@ -230,33 +252,42 @@ function getRandomPosition(element) {
   return [randomX,randomY];
 }
 
-function bombUse () {
-  document.addEventListener("keypress", function(event) {
-    if (event.keyCode == 32) {
+// function setUpPowers () {
+//   document.addEventListener("keypress", bombUse(event))
+// }
+
+function tearDownPowers () {
+  document.removeEventListener("keypress", bombUse, true)
+}
+
+var bombUse = function(event) {
+  // var keyDownlistener = document.addEventListener("keydown", function(event) {
+  if (event.code === 'Space') {
       if (game.bombs > 0) {
         game.timer = 3000
         game.bombs -= 1
+        console.log(`there are ${game.bombs} bombs left`)
         let getBombs = document.querySelector("#bombs")
         let numberOfBombs = getBombs.children
+        console.log(`there are ${numberOfBombs.length} bomb images`)
         if (numberOfBombs.length > 0) {
           getBombs.removeChild(getBombs.childNodes[0])
+          console.log(`there are only ${numberOfBombs.length} bomb images left`)
         }
         let enemyList = document.querySelectorAll('.pixelcat')
         enemyDeathSound()
+        game.points += enemyList.length
         for (let i = 0; i < enemyList.length; i++) {
           enemyList[i].removeEventListener('click', clickEnemy)
           enemyList[i].src = 'assets/spaceexplosion.gif'
-          game.points += 1
           game.totalEnemies -= 1
-          setTimeout(() => {
-             enemyList[i].remove()
-          }, 1000) 
-        let pointsUpdate = document.querySelector("#points")
-        pointsUpdate.innerHTML = `${game.points} CAT DESTRUCTIONS`
+          enemyList[i].remove()
+          let pointsUpdate = document.querySelector("#points")
+          pointsUpdate.innerHTML = `${game.points} CAT DESTRUCTIONS`
         }
       }
-    }
-  })
+  }
+  // }})
 }
 
 function spawnBombs () {

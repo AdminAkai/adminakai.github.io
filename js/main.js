@@ -170,7 +170,7 @@ function gameOver () {
           game.points = 0
           let restartGame = document.createElement('h3')
           restartGame.className = 'game-start-button'
-          restartGame.innerHTML = 'RESTART'
+          restartGame.innerHTML = 'RETURN TO MAIN MENU'
           parentNode.insertBefore(gameOverBox, parentNode.childNodes[0])
           let parentGameOver = document.querySelector('#game-start')
           parentGameOver.appendChild(gameOver)
