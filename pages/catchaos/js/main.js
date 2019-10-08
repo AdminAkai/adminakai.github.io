@@ -127,7 +127,7 @@ function clickInstructions () {
   instructionBox.id = 'instructionBox'
   parentNode.insertBefore(instructionBox, parentNode.childNodes[0])
   let innerInstructionBox = document.querySelector("#instructionBox")
-  let instructions = "ALL NAVIGATION BUTTONS ARE DISABLED WHEN THE GAME STARTS<br>CLICK THE CATS TO MAKE THEM EXPLODE!<br>IF THERE ARE MORE THAN 10 CATS ON THE SCREEN BY THE NEXT WAVE,<br>YOU TAKE DAMAGE!<br>HIT SPACEBAR TO SUMMON DEATH AND CLEAR THE WHOLE SCREEN FROM CATS!<br>REPORTS SAY THIS DOES NOT WORK AGAINT 'IT'<br>"
+  let instructions = "ALL NAVIGATION BUTTONS ARE DISABLED WHEN THE GAME STARTS<br>CLICK THE CATS TO MAKE THEM EXPLODE!<br>IF THERE ARE MORE THAN 10 CATS ON THE SCREEN BY THE NEXT WAVE,<br>YOU TAKE DAMAGE!<br>HIT SPACEBAR TO SUMMON DEATH AND CLEAR THE WHOLE SCREEN FROM CATS!<br>THIS ALSO SLOWS THEIR INVASION FOR A SHORT WHILE!"
   innerInstructionBox.innerHTML = `${instructions}`
   let returnButtonBox = document.createElement('div')
   returnButtonBox.className = 'return-box'
@@ -377,19 +377,19 @@ function newEnemy(src, lives) {
       enemyElement.setAttribute('lives', game.enemyTypes.parakat.lives)
       enemyElement.addEventListener('click', clickEnemy)
       document.querySelector(".game-space").appendChild(enemyElement)
-      let randomMovX = Math.floor(Math.random()*50)
-      let randomMovY = Math.floor(Math.random()*50)
+      let randomMovX = Math.floor(Math.random()*100)
+      let randomMovY = Math.floor(Math.random()*100)
       let enemyAnimTwo = anime({
         targets: document.querySelectorAll('.parakat'),
         loop: true,
         direction: 'alternate',
         translateX: {
           value: `${randomMovX}px`,
-          duration: 800,
+          duration: 1000,
         }, 
         translateY: {
           value: `${randomMovY}px`,
-          duration: 800,
+          duration: 1000,
         },
       })
     }
@@ -432,25 +432,21 @@ function newEnemy(src, lives) {
 function spawnEnemy() {
   newEnemy('pixelcat.png')
   game.roundCount += 1
-  if (game.roundCount === 4) {
+  if (game.roundCount === 5) {
     game.spawnrate += 1
-  } else if (game.roundCount === 12) {
-    game.spawnrate += 2
-  } else if (game.roundCount === 16) {
+  } else if (game.roundCount === 10) {
+    game.spawnrate += 1
+  } else if (game.roundCount === 15) {
     game.spawnrate += 1
   }
   if (game.roundCount % 7 === 0) {
-    newEnemy(game.enemyTypes.pixelcat.name)
     newEnemy(game.enemyTypes.parakat.name)
   }
   if (game.roundCount % 12 === 0) {
     game.timer -= 50
-    newEnemy(game.enemyTypes.pixelcat.name)
     newEnemy(game.enemyTypes.hiddendoor.name)
   }
-  if (game.roundCount % 50 === 0) {
-    newEnemy(game.enemyTypes.omnicat.name)
-  }
+
   gameOver()
 }
 
@@ -460,6 +456,9 @@ function clickEnemy () {
   if (lives === 0) {
     enemyDeathSound()
     game.points += 1
+    if (game.points === 100) {
+      newEnemy(game.enemyTypes.omnicat.name)
+    }
     game.totalEnemies -= 1
     let pointsUpdate = document.querySelector("#points")
     pointsUpdate.innerHTML = `${game.points} CAT DESTRUCTIONS`
@@ -473,6 +472,7 @@ function clickEnemy () {
     enemyHitSound()
     lives.toString()
     this.setAttribute('lives', lives)  
+    this.className += ' hit'
   }
 }
 
@@ -493,7 +493,7 @@ function enemyHitSound () {
 function summonDeathSound () {
   let audioDeath = document.getElementById('summon_death')
   audioDeath.load()
-  audioDeath.volume = 1
+  audioDeath.volume = 0.5
   audioDeath.play()
 }
 
